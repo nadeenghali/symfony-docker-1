@@ -2,7 +2,7 @@ version: '3'
 
 services:
     db:
-        image: mysql:8.0.20
+        image: mysql:5.7
         command: --default-authentication-plugin=mysql_native_password
         volumes:
             - "db_app:/var/lib/mysql"
@@ -19,12 +19,14 @@ services:
         build:
             context: .
             dockerfile: docker/php/Dockerfile
-            args:
-                TIMEZONE: ${TIMEZONE}
+        ports:
+            - 9000:9000
         volumes:
             - ./symfony/:/var/www/symfony/
         networks:
             - symfony
+        depends_on:
+            -   db
     nginx:
         build:
             context: .
@@ -35,6 +37,8 @@ services:
             - 80:80
         networks:
             - symfony
+        depends_on:
+            -   php
 
 volumes:
     db_app:
