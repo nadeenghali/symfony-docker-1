@@ -5,8 +5,13 @@ namespace App\Entity;
 use App\Repository\CountryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use ApiPlatform\Core\Annotation\ApiResource as ApiResource;
 
 /**
+ * @ApiResource(
+ *    collectionOperations={"get"},
+ *    itemOperations={"get"}
+ *    )
  * @ORM\Entity(repositoryClass=CountryRepository::class)
  */
 class Country

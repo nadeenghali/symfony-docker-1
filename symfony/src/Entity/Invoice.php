@@ -60,6 +60,12 @@ class Invoice
 	 */
 	private $invoiceItems;
 
+	/**
+	 * @ORM\ManyToOne(targetEntity=Recipient::class)
+	 * @ORM\JoinColumn(nullable=false)
+	 */
+	private $recipient;
+
 	public function __construct()
 	{
 		$this->invoiceItems = new ArrayCollection();
@@ -169,6 +175,18 @@ class Invoice
 				$invoiceItem->setInvoice(null);
 			}
 		}
+
+		return $this;
+	}
+
+	public function getRecipient(): ?Recipient
+	{
+		return $this->recipient;
+	}
+
+	public function setRecipient(?Recipient $recipient): self
+	{
+		$this->recipient = $recipient;
 
 		return $this;
 	}
